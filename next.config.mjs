@@ -12,7 +12,7 @@ const withNextIntl = createNextIntlPlugin();
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: "standalone",
+  // 移除 output: "standalone" - Cloudflare Workers 使用 OpenNext 适配器处理输出
   reactStrictMode: false,
   trailingSlash: true, // 确保URL都带尾部斜杠，与canonical保持一致
   pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],

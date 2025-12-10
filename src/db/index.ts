@@ -2,8 +2,11 @@ import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 
 // Detect if running in Cloudflare Workers environment
+// 使用多种方法检测，确保在不同环境下都能正确识别
 const isCloudflareWorker =
-  typeof globalThis !== "undefined" && "Cloudflare" in globalThis;
+  (typeof globalThis !== "undefined" && "Cloudflare" in globalThis) ||
+  (typeof process !== "undefined" && process.env.CF_PAGES === "1") ||
+  (typeof navigator !== "undefined" && navigator.userAgent?.includes("Cloudflare"));
 
 // Database instance for Node.js environment
 let dbInstance: ReturnType<typeof drizzle> | null = null;
