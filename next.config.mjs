@@ -24,6 +24,40 @@ const nextConfig = {
       },
     ],
   },
+  // 优化打包大小（用于 Cloudflare Workers）
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      // 服务器端优化：启用 tree-shaking 和代码压缩
+      config.optimization = {
+        ...config.optimization,
+        usedExports: true,
+        sideEffects: false,
+        minimize: true,
+        // 启用模块合并以减少 bundle 大小
+        moduleIds: 'deterministic',
+        chunkIds: 'deterministic',
+      };
+    }
+    return config;
+  },
+  // 压缩输出
+  compress: true,
+  // 生产环境优化
+  swcMinify: true,
+  // 实验性功能：优化服务器组件打包
+  experimental: {
+    optimizePackageImports: [
+      "@radix-ui/react-accordion",
+      "@radix-ui/react-avatar",
+      "@radix-ui/react-dialog",
+      "@radix-ui/react-dropdown-menu",
+      "@radix-ui/react-select",
+      "@radix-ui/react-tabs",
+      "@radix-ui/react-tooltip",
+      "lucide-react",
+      "framer-motion",
+    ],
+  },
   async redirects() {
     return [
       {
@@ -41,6 +75,7 @@ const nextConfig = {
 const configWithMDX = {
   ...nextConfig,
   experimental: {
+    ...nextConfig.experimental,
     mdxRs: true,
   },
 };
