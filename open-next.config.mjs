@@ -1,7 +1,5 @@
-// OpenNext 配置文件（正确文件名：open-next.config.mjs）
+// OpenNext 配置文件（Cloudflare 适配器）
 // 与 wrangler.jsonc 的输出目录保持一致
-export default {
-  outDir: ".open-next",
-};
+export default {};
 
 
